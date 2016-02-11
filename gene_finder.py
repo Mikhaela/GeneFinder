@@ -96,7 +96,10 @@ def find_all_ORFs_oneframe(dna):
 		dna: a DNA sequence
 		returns: a list of non-nested ORFs
 	>>> find_all_ORFs_oneframe("ATGCATGAATGTAGATAGATGTGCCC")
-	['ATGCATGAATGTAGA', 'ATGTGCCC']
+	['ATGCATGAATGTAGA', 'ATGTGCCC'] 
+
+	While I was coding I manually tired some other sequences to see if they would work, as I was building the fucntion 
+
 	"""
 	start_codon = "ATG"
 	index = 0
@@ -123,6 +126,8 @@ def find_all_ORFs(dna):
 
 	>>> find_all_ORFs("ATGCATGAATGTAG")
 	['ATGCATGAATGTAG', 'ATGAATGTAG', 'ATG']
+
+	if the previous functions worked, and were tested properly, adding extra doctest would not be beneficial 
 	"""
 	result =  find_all_ORFs_oneframe(dna[0:]) #find_all_ORF_oneframe returns a list
 	result += find_all_ORFs_oneframe(dna[1:]) #this is adding a list to a list 
@@ -137,6 +142,8 @@ def find_all_ORFs_both_strands(dna):
 		returns: a list of non-nested ORFs
 	>>> find_all_ORFs_both_strands("ATGCGAATGTAGCATCAAA")
 	['ATGCGAATG', 'ATGCTACATTCGCAT']
+
+	same as find_all_ORFs, the functions this function relys on already have sufficient doctests and I don't think this one needs more tests 
 	"""
 	result =  find_all_ORFs(dna)
 	result += find_all_ORFs(get_reverse_complement(dna))
@@ -148,6 +155,7 @@ def longest_ORF(dna):
 		as a string
 	>>> longest_ORF("ATGCGAATGTAGCATCAAA")
 	'ATGCTACATTCGCAT'
+	longest_ORF relies on fucntions that have already been tested 
 	"""
 	most_long_ORF = ""
 	all_ORFs = find_all_ORFs_both_strands(dna) #a list of all ORFs
@@ -188,12 +196,13 @@ def coding_strand_to_AA(dna):
 		'MR'
 		>>> coding_strand_to_AA("ATGCCCGCTTT")
 		'MPA'
+		>>> coding_strand_to_AA("TTCTTTTTA")
+		'FFL'
 	"""
 	amino_acid_chain = ""
 	index = 0
 	while index < len(dna)-2: 
 		codon = dna[index:index+3]
-		print codon
 		amino_acid_chain += aa_table[codon]
 		index = index + 3
 	return amino_acid_chain
@@ -218,10 +227,10 @@ def gene_finder(dna):
 from load import load_seq
 dna = load_seq("./data/X73525.fa")
 
-print gene_finder(dna)
+#print gene_finder(dna)
 
-# if __name__ == "__main__":
-# 	import doctest
-# 	doctest.testmod()
-# 	doctest.run_docstring_examples(coding_strand_to_AA, globals(),verbose = True)
+if __name__ == "__main__":
+	import doctest
+	doctest.testmod()
+	doctest.run_docstring_examples(coding_strand_to_AA, globals(),verbose = True)
 
