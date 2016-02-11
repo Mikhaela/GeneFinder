@@ -28,6 +28,10 @@ def get_complement(nucleotide):
 	'T'
 	>>> get_complement('C')
 	'G'
+	>>> get_complement('T')
+	'A'
+	get_complement('Q') #this should result in an error 
+	
 	"""	
 	if nucleotide == 'A':
 		return 'T' 
@@ -37,6 +41,8 @@ def get_complement(nucleotide):
 		return 'A'
 	elif nucleotide == 'G':
 		return 'C'
+	else: 
+		raise ValueError('bad letter')
 	
 def get_reverse_complement(dna):
 	""" Computes the reverse complementary sequence of DNA for the specfied DNA
